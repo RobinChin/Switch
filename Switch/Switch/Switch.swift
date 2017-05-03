@@ -8,33 +8,34 @@
 
 import UIKit
 
+@IBDesignable
 class Switch: UIControl {
 
-    var isOn: Bool = false {
+    @IBInspectable var isOn: Bool = false {
         didSet {
             updateFrames()
         }
     }
     
-    var switchTintColor: UIColor = UIColor(white: 0.9, alpha: 1.0) {
+    @IBInspectable var switchTintColor: UIColor = UIColor(white: 0.9, alpha: 1.0) {
         didSet {
             basicLayer.setNeedsDisplay()
         }
     }
     
-    var highlightTintColor: UIColor = UIColor(red: 0.0, green: 0.45, blue: 0.94, alpha: 1.0) {
+    @IBInspectable var highlightTintColor: UIColor = UIColor(red: 0.0, green: 0.45, blue: 0.94, alpha: 1.0) {
         didSet {
             basicLayer.setNeedsDisplay()
         }
     }
     
-    var thumbTintColor: UIColor = UIColor.white {
+    @IBInspectable var thumbTintColor: UIColor = UIColor.white {
         didSet {
             switchLayer.setNeedsDisplay()
         }
     }
     
-    var curvaceousness: CGFloat = 0.5 {
+    @IBInspectable var curvaceousness: CGFloat = 0.5 {
         didSet {
             basicLayer.setNeedsDisplay()
             switchLayer.setNeedsDisplay()
@@ -65,7 +66,17 @@ class Switch: UIControl {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        
+        basicLayer._switch = self
+        basicLayer.contentsScale = UIScreen.main.scale
+        layer.addSublayer(basicLayer)
+        
+        switchLayer._switch = self
+        switchLayer.contentsScale = UIScreen.main.scale
+        layer.addSublayer(switchLayer)
+        
+        updateFrames()
     }
     
     func updateFrames() {
