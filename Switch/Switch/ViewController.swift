@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         mySwitch.frame = CGRect(x: margin, y: margin + bounds.height / 2, width: width, height: 90.0)
     }
     
-    func switchHandle() {
+    @objc func switchHandle() {
         print(mySwitch.isOn)
     }
 }
